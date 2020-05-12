@@ -7,10 +7,12 @@ export function Demo() {
     currentIndex: 0,
     stepProgress: 0,
   });
+  const playerRef = React.useRef();
   return (
     <div style={{ display: "flex" }}>
       <div style={{}}>
         <VideoPlayer
+          ref={playerRef}
           steps={steps}
           onChange={({ stepIndex, stepProgress }) =>
             setState({ currentIndex: stepIndex, stepProgress })
@@ -23,7 +25,7 @@ export function Demo() {
         currentIndex={state.currentIndex}
         stepProgress={state.stepProgress}
         onChange={({ stepIndex, stepProgress }) =>
-          setState({ currentIndex: stepIndex, stepProgress })
+          playerRef.current.seek(stepIndex, stepProgress, false)
         }
       />
     </div>

@@ -4,7 +4,7 @@ import YouTube from "react-youtube";
 
 export { VideoPlayer };
 
-function VideoPlayer({ steps, onChange }) {
+const VideoPlayer = React.forwardRef(({ steps, onChange }, parentRef) => {
   const opts = {
     height: "390",
     width: "640",
@@ -16,43 +16,93 @@ function VideoPlayer({ steps, onChange }) {
     },
   };
 
-  const ref = React.useRef({ player: null, time: steps[0].start });
-  const { stepIndex } = getStepProgressFromValue(steps, ref.current.time);
-  const step = steps[stepIndex];
+  const playerRef = React.useRef({ player: null, state: initState(steps) });
 
   useInterval(() => {
-    const { player } = ref.current;
+    const { player, state } = playerRef.current;
     if (!player) return;
 
-    const prev = ref.current.time;
-    const now = player.getCurrentTime();
-    if (prev < step.end && step.end <= now) {
-      if (stepIndex < steps.length - 1) {
-        const newTime = steps[stepIndex + 1].start;
-        player.seekTo(newTime);
-        ref.current.time = newTime;
-        onChange(getStepProgressFromValue(steps, newTime));
-      } else {
-        player.pause();
-        ref.current.time = now;
-        onChange(getStepProgressFromValue(steps, now));
-      }
-    } else {
-      ref.current.time = now;
-      onChange(getStepProgressFromValue(steps, now));
+    const time = player.getCurrentTime();
+    const { pause, seek } = state.tick(time);
+    const newTime = state.getTime();
+
+    if (pause) {
+      player.pauseVideo();
     }
+
+    if (seek) {
+      player.seekTo(newTime, true);
+    }
+
+    onChange(state.get());
   }, 100);
 
-  const onReady = ({ target }) => {
-    ref.current.player = target;
-  };
-  return <YouTube videoId="9cQT4urTlXM" opts={opts} onReady={onReady} />;
-}
+  React.useImperativeHandle(parentRef, () => ({
+    seek: (stepIndex, stepProgress, ahead) => {
+      const { player, state } = playerRef.current;
+      state.seek(stepIndex, stepProgress);
+      const newTime = state.getTime();
+      player.seekTo(newTime, true);
+      onChange(state.get());
+    },
+    play: () => playerRef.current.player.playVideo(),
+    pause: () => playerRef.current.player.pauseVideo(),
+  }));
 
-function getStepProgressFromValue(steps, value) {
-  let i = 0;
-  for (; i < steps.length - 1; i++) {
-    if (value < steps[i].end) break;
-  }
-  return { stepIndex: i, stepProgress: value - steps[i].start };
+  return (
+    <YouTube
+      videoId="9cQT4urTlXM"
+      opts={opts}
+      onReady={({ target }) => {
+        playerRef.current.player = target;
+      }}
+    />
+  );
+});
+
+function initState(steps) {
+  const state = {
+    currentIndex: 0,
+    stepProgress: 0,
+  };
+
+  return {
+    get: () => ({
+      stepIndex: state.currentIndex,
+      stepProgress: state.stepProgress,
+    }),
+    getTime: () => {
+      return steps[state.currentIndex].start + state.stepProgress;
+    },
+    seek: (stepIndex, stepProgress) => {
+      state.currentIndex = stepIndex;
+      state.stepProgress = stepProgress;
+    },
+    tick: (time) => {
+      const currentStep = steps[state.currentIndex];
+      const stepChanged = time >= currentStep.end;
+      if (!stepChanged) {
+        state.stepProgress = time - currentStep.start;
+        return {};
+      }
+
+      const isLastStep = state.currentIndex === steps.length - 1;
+      if (isLastStep) {
+        state.stepProgress = currentStep.end - currentStep.start;
+        return { pause: true };
+      }
+
+      const nextStep = steps[state.currentIndex + 1];
+      const jump = currentStep.end !== nextStep.start;
+      if (jump) {
+        state.currentIndex++;
+        state.stepProgress = 0;
+        return { seek: true };
+      } else {
+        state.currentIndex++;
+        state.stepProgress = time - nextStep.start;
+        return {};
+      }
+    },
+  };
 }
