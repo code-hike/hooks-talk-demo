@@ -6,6 +6,7 @@ export function Demo() {
   const [state, setState] = React.useState({
     currentIndex: 0,
     stepProgress: 0,
+    isPlaying: true,
   });
   const playerRef = React.useRef();
   return (
@@ -15,7 +16,7 @@ export function Demo() {
           ref={playerRef}
           steps={steps}
           onChange={({ stepIndex, stepProgress }) =>
-            setState({ currentIndex: stepIndex, stepProgress })
+            setState((s) => ({ ...s, currentIndex: stepIndex, stepProgress }))
           }
         />
         {state.currentIndex} - {state.stepProgress}
@@ -24,9 +25,18 @@ export function Demo() {
         inputSteps={steps}
         currentIndex={state.currentIndex}
         stepProgress={state.stepProgress}
+        isPlaying={state.isPlaying}
         onChange={({ stepIndex, stepProgress }) =>
           playerRef.current.seek(stepIndex, stepProgress, false)
         }
+        play={() => {
+          playerRef.current.play();
+          setState((s) => ({ ...s, isPlaying: true }));
+        }}
+        pause={() => {
+          playerRef.current.pause();
+          setState((s) => ({ ...s, isPlaying: false }));
+        }}
       />
     </div>
   );

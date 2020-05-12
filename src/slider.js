@@ -3,7 +3,16 @@ import { Range, Direction, getTrackBackground } from "react-range";
 
 export { Slider };
 
-function Slider({ inputSteps, currentIndex, stepProgress, onChange, style }) {
+function Slider({
+  inputSteps,
+  currentIndex,
+  stepProgress,
+  onChange,
+  isPlaying,
+  play,
+  pause,
+  style,
+}) {
   const { steps, totalDuration } = React.useMemo(() => {
     let totalDuration = 0;
     let steps = [];
@@ -20,13 +29,20 @@ function Slider({ inputSteps, currentIndex, stepProgress, onChange, style }) {
   const currentStep = steps[currentIndex];
   const progress = currentStep.start + stepProgress;
   return (
-    <RangeBar
-      max={totalDuration}
-      value={progress}
-      style={style}
-      ticks={steps.map((s) => s.start)}
-      onChange={(value) => onChange(getStepProgressFromValue(steps, value))}
-    />
+    <div style={{ display: "flex", flexDirection: "column", ...style }}>
+      <RangeBar
+        style={style}
+        max={totalDuration}
+        value={progress}
+        ticks={steps.map((s) => s.start)}
+        onChange={(value) => onChange(getStepProgressFromValue(steps, value))}
+      />
+      {isPlaying ? (
+        <button onClick={pause}>Pause</button>
+      ) : (
+        <button onClick={play}>Play</button>
+      )}
+    </div>
   );
 }
 
@@ -63,7 +79,7 @@ function RangeBar({ max, value, onChange, ticks, style }) {
             // margin: "0 10px",
             position: "relative",
             alignItems: "center",
-            ...style,
+            flex: 1,
           }}
         >
           <div style={{ position: "absolute", height: "100%" }}>
