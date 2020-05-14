@@ -4,61 +4,68 @@ import YouTube from "react-youtube";
 
 export { VideoPlayer };
 
-const VideoPlayer = React.forwardRef(({ steps, onChange }, parentRef) => {
-  const opts = {
-    height: "390",
-    width: "640",
-    playerVars: {
-      controls: 0,
-      autoplay: 1,
-      fs: 0,
-      start: steps[0].start,
-    },
-  };
+const VideoPlayer = React.forwardRef(
+  ({ steps, onChange, style }, parentRef) => {
+    const opts = {
+      height: "200",
+      width: "300",
+      playerVars: {
+        controls: 0,
+        autoplay: 1,
+        disablekb: 1,
+        modestbranding: 1,
+        origin: "codehike.org",
+        fs: 0,
+        start: steps[0].start,
+      },
+    };
 
-  const playerRef = React.useRef({ player: null, state: initState(steps) });
+    const playerRef = React.useRef({ player: null, state: initState(steps) });
 
-  useInterval(() => {
-    const { player, state } = playerRef.current;
-    if (!player) return;
-
-    const time = player.getCurrentTime();
-    const { pause, seek } = state.tick(time);
-    const newTime = state.getTime();
-
-    if (pause) {
-      player.pauseVideo();
-    }
-
-    if (seek) {
-      player.seekTo(newTime, true);
-    }
-
-    onChange(state.get());
-  }, 100);
-
-  React.useImperativeHandle(parentRef, () => ({
-    seek: (stepIndex, stepProgress, ahead) => {
+    useInterval(() => {
       const { player, state } = playerRef.current;
-      state.seek(stepIndex, stepProgress);
-      const newTime = state.getTime();
-      player.seekTo(newTime, true);
-      onChange(state.get());
-    },
-    play: () => playerRef.current.player.playVideo(),
-    pause: () => playerRef.current.player.pauseVideo(),
-  }));
+      if (!player) return;
 
-  return (
-    <YouTube
-      videoId="9cQT4urTlXM"
-      opts={opts}
-      onReady={({ target }) => {
-        playerRef.current.player = target;
-      }}
-    />
-  );
-});
+      const time = player.getCurrentTime();
+      const { pause, seek } = state.tick(time);
+      const newTime = state.getTime();
+
+      if (pause) {
+        player.pauseVideo();
+      }
+
+      if (seek) {
+        player.seekTo(newTime, true);
+      }
+
+      onChange(state.get());
+    }, 100);
+
+    React.useImperativeHandle(parentRef, () => ({
+      seek: (stepIndex, stepProgress, ahead) => {
+        const { player, state } = playerRef.current;
+        state.seek(stepIndex, stepProgress);
+        const newTime = state.getTime();
+        player.seekTo(newTime, true);
+        onChange(state.get());
+      },
+      play: () => playerRef.current.player.playVideo(),
+      pause: () => playerRef.current.player.pauseVideo(),
+    }));
+
+    return (
+      <div style={style}>
+        <YouTube
+          videoId="9cQT4urTlXM"
+          opts={opts}
+          onReady={({ target }) => {
+            playerRef.current.player = target;
+          }}
+        />
+      </div>
+    );
+  }
+);
 
 function initState(steps) {
   const state = {

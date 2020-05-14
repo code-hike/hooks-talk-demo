@@ -1,6 +1,7 @@
 import React from "react";
 import { Slider } from "./slider";
 import { VideoPlayer } from "./video-player";
+import { MiniBrowser } from "./mini-browser/index.tsx";
 
 export function Demo() {
   const [state, setState] = React.useState({
@@ -12,15 +13,32 @@ export function Demo() {
   return (
     <div style={{ display: "flex" }}>
       <div style={{}}>
-        <VideoPlayer
-          ref={playerRef}
-          steps={steps}
-          onChange={({ stepIndex, stepProgress }) =>
-            setState((s) => ({ ...s, currentIndex: stepIndex, stepProgress }))
-          }
-        />
+        <MiniBrowser url="https://whatismyviewport.com/" height={300} />
+        <div
+          style={{
+            position: "relative",
+            borderRadius: "50%",
+            overflow: "hidden",
+            height: 200,
+            width: 200,
+            margin: "15px auto",
+          }}
+        >
+          <VideoPlayer
+            ref={playerRef}
+            steps={steps}
+            style={{
+              position: "absolute",
+              transform: "translateX(-30px)",
+            }}
+            onChange={({ stepIndex, stepProgress }) =>
+              setState((s) => ({ ...s, currentIndex: stepIndex, stepProgress }))
+            }
+          />
+        </div>
         {state.currentIndex} - {state.stepProgress}
       </div>
+      <div>{state.currentIndex}</div>
       <Slider
         inputSteps={steps}
         currentIndex={state.currentIndex}
