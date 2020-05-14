@@ -4,10 +4,11 @@ import { WindowButtons, Back, Forward, Refresh, Open } from "./buttons.tsx";
 function MiniBrowser({
   height = 100,
   url,
+  children,
 }: {
   height?: number;
   url: string;
-  // children: React.ReactNode;
+  children: React.ReactNode;
 }) {
   return (
     <div>
@@ -31,13 +32,15 @@ function MiniBrowser({
             height: "calc(100% - 28px)",
           }}
         >
-          <iframe
-            src={url}
-            height="100%"
-            width="100%"
-            style={{ border: "none" }}
-            // sandbox={sandbox}
-          />
+          {children || (
+            <iframe
+              src={url}
+              height="100%"
+              width="100%"
+              style={{ border: "none" }}
+              // sandbox={sandbox}
+            />
+          )}
         </div>
       </div>
     </div>

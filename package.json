@@ -8,5 +8,8 @@
   },
   "scripts": {
     "dev": "next"
+  },
+  "devDependencies": {
+    "@types/react": "^16.9.35"
   }
 }

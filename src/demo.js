@@ -2,6 +2,8 @@ import React from "react";
 import { Slider } from "./slider";
 import { VideoPlayer } from "./video-player";
 import { MiniBrowser } from "./mini-browser/index.tsx";
+import Demo0 from "../guide/0.0.class";
+import Demo1 from "../guide/0.1.class";
 
 export function Demo() {
   const [state, setState] = React.useState({
@@ -13,7 +15,11 @@ export function Demo() {
   return (
     <div style={{ display: "flex" }}>
       <div style={{}}>
-        <MiniBrowser url="https://whatismyviewport.com/" height={300} />
+        <MiniBrowser url="http://localhost:3000/" height={300}>
+          <div className="demo-container">
+            {state.currentIndex === 0 ? <Demo0 name={`Marty`} /> : <Demo1 />}
+          </div>
+        </MiniBrowser>
         <div
           style={{
             position: "relative",
