@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "next": "^9.3.6",
+    "raw-loader": "^4.0.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-range": "^1.6.1",
