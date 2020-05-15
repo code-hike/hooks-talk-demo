@@ -4,6 +4,8 @@ import { VideoPlayer } from "./video-player";
 import { MiniBrowser } from "./mini-browser/index.tsx";
 import Demo0 from "../guide/0.0.class";
 import Demo1 from "../guide/0.1.class";
+import Demo2 from "../guide/0.2.class";
+import { SmoothView } from "./smooth-view";
 
 export function Demo() {
   const [state, setState] = React.useState({
@@ -17,7 +19,11 @@ export function Demo() {
       <div style={{}}>
         <MiniBrowser url="http://localhost:3000/" height={300}>
           <div className="demo-container">
-            {state.currentIndex === 0 ? <Demo0 name={`Marty`} /> : <Demo1 />}
+            <SmoothView stepIndex={state.currentIndex}>
+              <Demo0 name={`Marty`} />
+              <Demo1 />
+              <Demo2 />
+            </SmoothView>
           </div>
         </MiniBrowser>
         <div

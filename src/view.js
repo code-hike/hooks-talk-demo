@@ -1,7 +1,7 @@
 import React from "react";
 
-const view = (
-  <SmoothView>
+const view = ({ stepIndex, changeStep }) => (
+  <SmoothView stepIndex={changeIndex}>
     <Row>
       <Column width={400}>
         <SmoothBrowser url="/step1" />
@@ -12,7 +12,7 @@ const view = (
         files={{ "ClassExample.js": "" }}
         active={"ClassExample.js"}
       />
-      <ProgressRange />
+      <ProgressRange changeStep={changeStep} />
     </Row>
   </SmoothView>
 );
