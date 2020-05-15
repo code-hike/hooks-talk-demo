@@ -69,9 +69,10 @@ export function Demo() {
             <VideoPlayer
               ref={playerRef}
               steps={steps}
+              videoId="dpw9EHDh2bM"
               style={{
                 position: "absolute",
-                transform: "translateX(-30px)",
+                transform: "translate(-67px, -288px)",
               }}
               onChange={({ stepIndex, stepProgress }) =>
                 setState((s) => ({
@@ -106,9 +107,9 @@ export function Demo() {
 }
 
 const steps = [
-  { ...t("12:10-12:15") },
-  { ...t("12:30-12:55") },
-  { ...t("12:55-13:40") },
+  { ...t("18:03-18:26") },
+  { ...t("18:26-19:16") },
+  { ...t("17:50-18:03") },
 ];
 
 function t(ts) {

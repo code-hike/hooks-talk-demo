@@ -5,10 +5,10 @@ import YouTube from "react-youtube";
 export { VideoPlayer };
 
 const VideoPlayer = React.forwardRef(
-  ({ steps, onChange, style }, parentRef) => {
+  ({ steps, onChange, style, videoId }, parentRef) => {
     const opts = {
-      height: "200",
-      width: "300",
+      height: "500",
+      width: "800",
       playerVars: {
         controls: 0,
         autoplay: 1,
@@ -56,7 +56,7 @@ const VideoPlayer = React.forwardRef(
     return (
       <div style={style}>
         <YouTube
-          videoId="9cQT4urTlXM"
+          videoId={videoId}
           opts={opts}
           onReady={({ target }) => {
             playerRef.current.player = target;

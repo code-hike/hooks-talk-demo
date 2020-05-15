@@ -10,9 +10,9 @@ function MiniEditor({ children, files, active, height, link, style }) {
         height,
         position: "relative",
         borderRadius: "6px",
-        border: "1px solid rgba(175, 173, 169, 0.15)",
-        // boxShadow:
-        //   "0 13px 27px -5px rgba(50,50,93,.25), 0 8px 16px -8px rgba(0,0,0,.3), 0 -6px 16px -6px rgba(0,0,0,.025)",
+        // border: "1px solid rgba(175, 173, 169, 0.15)",
+        boxShadow:
+          "0 13px 27px -5px rgba(50,50,93,.25), 0 8px 16px -8px rgba(0,0,0,.3), 0 -6px 16px -6px rgba(0,0,0,.025)",
         overflow: "hidden",
         fontFamily:
           "Ubuntu,Droid Sans,-apple-system,BlinkMacSystemFont,Segoe WPC,Segoe UI,sans-serif",
