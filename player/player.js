@@ -5,12 +5,15 @@ import { PauseIcon, PlayIcon, LeftIcon, RightIcon } from "./icons";
 
 export { Player };
 
-function Player({ videoId, onChange, style, steps }) {
-  const [state, setState] = React.useState({
-    currentIndex: 0,
-    stepProgress: 0,
-    isPlaying: true,
-  });
+function Player({
+  videoId,
+  onChange,
+  style,
+  steps,
+  stepIndex,
+  stepProgress,
+  isPlaying,
+}) {
   const playerRef = React.useRef();
   return (
     <div
@@ -65,14 +68,7 @@ function Player({ videoId, onChange, style, steps }) {
             style={{
               transform: "translate(-74px, -278px)",
             }}
-            onChange={({ stepIndex, stepProgress, isPlaying }) =>
-              setState((s) => ({
-                ...s,
-                isPlaying: isPlaying,
-                currentIndex: stepIndex,
-                stepProgress,
-              }))
-            }
+            onChange={onChange}
           />
         </div>
         <div
@@ -107,12 +103,10 @@ function Player({ videoId, onChange, style, steps }) {
           <Button
             style={{ padding: "0 12px" }}
             onClick={() => {
-              state.isPlaying
-                ? playerRef.current.pause()
-                : playerRef.current.play();
+              isPlaying ? playerRef.current.pause() : playerRef.current.play();
             }}
           >
-            {state.isPlaying ? (
+            {isPlaying ? (
               <PauseIcon style={{ display: "block" }} aria-label="Pause" />
             ) : (
               <PlayIcon style={{ display: "block" }} aria-label="Play" />
@@ -127,20 +121,12 @@ function Player({ videoId, onChange, style, steps }) {
         </div>
         <Slider
           inputSteps={steps}
-          currentIndex={state.currentIndex}
-          stepProgress={state.stepProgress}
-          isPlaying={state.isPlaying}
+          currentIndex={stepIndex}
+          stepProgress={stepProgress}
+          isPlaying={isPlaying}
           onChange={({ stepIndex, stepProgress }) =>
             playerRef.current.seek(stepIndex, stepProgress, false)
           }
-          play={() => {
-            playerRef.current.play();
-            setState((s) => ({ ...s, isPlaying: true }));
-          }}
-          pause={() => {
-            playerRef.current.pause();
-            setState((s) => ({ ...s, isPlaying: false }));
-          }}
           style={{ padding: "15px 30px 15px" }}
         />
       </div>

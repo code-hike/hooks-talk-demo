@@ -1,6 +1,4 @@
 import React from "react";
-import { Slider } from "../player/slider";
-import { VideoPlayer } from "../player/video-player";
 import { MiniBrowser } from "./mini-browser/index.tsx";
 import Demo0 from "../guide/0.0.class";
 import Demo1 from "../guide/0.1.class";
@@ -18,7 +16,6 @@ export function Demo() {
     stepProgress: 0,
     isPlaying: true,
   });
-  const playerRef = React.useRef();
   return (
     <div
       style={{
@@ -58,52 +55,22 @@ export function Demo() {
             </div>
           </MiniBrowser>
           <div style={{ height: 30 }} />
-          <Player videoId="dpw9EHDh2bM" style={{ height: 185 }} steps={steps} />
-          {/* <div
-            style={{
-              position: "relative",
-              borderRadius: "8px",
-              overflow: "hidden",
-              height: 185,
-              width: 285,
-              margin: "15px auto",
-            }}
-          >
-            <VideoPlayer
-              ref={playerRef}
-              steps={steps}
-              videoId="dpw9EHDh2bM"
-              style={{
-                position: "absolute",
-                transform: "translate(-67px, -288px)",
-              }}
-              onChange={({ stepIndex, stepProgress }) =>
-                setState((s) => ({
-                  ...s,
-                  currentIndex: stepIndex,
-                  stepProgress,
-                }))
-              }
-            />
-          </div> */}
+          <Player
+            videoId="dpw9EHDh2bM"
+            style={{ height: 185 }}
+            steps={steps}
+            stepIndex={state.currentIndex}
+            stepProgress={state.stepProgress}
+            isPlaying={state.isPlaying}
+            onChange={({ stepIndex, stepProgress, isPlaying }) =>
+              setState(() => ({
+                isPlaying,
+                currentIndex: stepIndex,
+                stepProgress,
+              }))
+            }
+          />
         </div>
-        {/* <Slider
-          inputSteps={steps}
-          currentIndex={state.currentIndex}
-          stepProgress={state.stepProgress}
-          isPlaying={state.isPlaying}
-          onChange={({ stepIndex, stepProgress }) =>
-            playerRef.current.seek(stepIndex, stepProgress, false)
-          }
-          play={() => {
-            playerRef.current.play();
-            setState((s) => ({ ...s, isPlaying: true }));
-          }}
-          pause={() => {
-            playerRef.current.pause();
-            setState((s) => ({ ...s, isPlaying: false }));
-          }}
-        /> */}
       </div>
     </div>
   );
