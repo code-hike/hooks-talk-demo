@@ -46,9 +46,9 @@ export function Demo() {
             <pre>{code2}</pre>
           </SmoothView>
         </MiniEditor>
-        <div style={{ width: 40 }} />
+        <div style={{ width: 30 }} />
         <div style={{}}>
-          <MiniBrowser url="http://localhost:3000/" height={400}>
+          <MiniBrowser url="http://localhost:3000/" height={385}>
             <div className="demo-container">
               <SmoothView stepIndex={state.currentIndex}>
                 <Demo0 name={`Marty`} />
@@ -57,7 +57,7 @@ export function Demo() {
               </SmoothView>
             </div>
           </MiniBrowser>
-          <div style={{ height: "15px" }} />
+          <div style={{ height: 30 }} />
           <Player videoId="dpw9EHDh2bM" style={{ height: 185 }} steps={steps} />
           {/* <div
             style={{
@@ -113,6 +113,8 @@ const steps = [
   { ...t("18:03-18:26") },
   { ...t("18:26-19:16") },
   { ...t("17:50-18:03") },
+  { ...t("19:20-20:03") },
+  { ...t("20:20-22:03") },
 ];
 
 function t(ts) {

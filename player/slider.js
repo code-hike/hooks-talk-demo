@@ -37,11 +37,11 @@ function Slider({
         ticks={steps.map((s) => s.start)}
         onChange={(value) => onChange(getStepProgressFromValue(steps, value))}
       />
-      {isPlaying ? (
+      {/* {isPlaying ? (
         <button onClick={pause}>Pause</button>
       ) : (
         <button onClick={play}>Play</button>
-      )}
+      )} */}
     </div>
   );
 }
@@ -57,7 +57,7 @@ function getStepProgressFromValue(steps, value) {
 function RangeBar({ max, value, onChange, ticks, style }) {
   return (
     <Range
-      direction={Direction.Down}
+      direction={Direction.Right}
       values={[value]}
       step={1}
       min={0}
@@ -69,11 +69,11 @@ function RangeBar({ max, value, onChange, ticks, style }) {
           onTouchStart={props.onTouchStart}
           style={{
             ...props.style,
-            width: 20,
+            height: 20,
             // border: "1px solid salmon",
             // height: "32px",
             display: "flex",
-            flexDirection: "column",
+            // flexDirection: "column",
             margin: "6px 0",
             // width: "100%",
             // margin: "0 10px",
@@ -82,7 +82,7 @@ function RangeBar({ max, value, onChange, ticks, style }) {
             flex: 1,
           }}
         >
-          <div style={{ position: "absolute", height: "100%" }}>
+          <div style={{ position: "absolute", width: "100%" }}>
             {ticks.map((x) => (
               <div
                 key={x}
@@ -90,8 +90,8 @@ function RangeBar({ max, value, onChange, ticks, style }) {
                   width: 10,
                   height: 10,
                   position: "absolute",
-                  top: `${(100 * x) / max}%`,
-                  background: value < x ? "#ccc" : "#7387c4",
+                  left: `${(100 * x) / max}%`,
+                  background: value < x ? "#333" : "#7387c4",
                   borderRadius: "50%",
                   transform: `translate(-50%,-50%)`,
                 }}
@@ -101,16 +101,16 @@ function RangeBar({ max, value, onChange, ticks, style }) {
           <div
             ref={props.ref}
             style={{
-              width: "4px",
-              height: "100%",
+              height: "4px",
+              width: "100%",
               borderRadius: "4px",
 
               background: getTrackBackground({
                 values: [value],
-                colors: ["#7387c4", "#ccc"],
+                colors: ["#7387c4", "#333"],
                 min: 0,
                 max: max,
-                direction: Direction.Down,
+                direction: Direction.Right,
               }),
             }}
           >
@@ -123,8 +123,8 @@ function RangeBar({ max, value, onChange, ticks, style }) {
           {...props}
           style={{
             ...props.style,
-            height: "10px",
-            width: "6px",
+            width: "10px",
+            height: "6px",
             // borderRadius: "50%",
             // border: `${isDragged ? 2 : 0}px solid #4f4f4f`,
             // backgroundColor: "#fafafa",

@@ -1,9 +1,17 @@
 import React from "react";
 import { VideoPlayer } from "./video-player";
+import { Slider } from "./slider";
+import { PauseIcon, PlayIcon, LeftIcon, RightIcon } from "./icons";
 
 export { Player };
 
 function Player({ videoId, onChange, style, steps }) {
+  const [state, setState] = React.useState({
+    currentIndex: 0,
+    stepProgress: 0,
+    isPlaying: true,
+  });
+  const playerRef = React.useRef();
   return (
     <div
       style={{
@@ -23,35 +31,35 @@ function Player({ videoId, onChange, style, steps }) {
           overflow: "hidden",
           height: 185,
           width: 185,
-          right: 0,
+          right: 10,
         }}
       >
         <div
           style={{
             position: "absolute",
-            left: 5,
-            right: 5,
-            top: 5,
-            bottom: 5,
+            left: 2,
+            right: 2,
+            top: 2,
+            bottom: 2,
             borderRadius: "50%",
             overflow: "hidden",
             background: "rgb(20,20,20)",
           }}
         >
           <VideoPlayer
-            // ref={playerRef}
+            ref={playerRef}
             steps={steps}
             videoId={videoId}
             style={{
-              transform: "translate(-71px, -275px)",
+              transform: "translate(-74px, -278px)",
             }}
-            // onChange={({ stepIndex, stepProgress }) =>
-            //   setState((s) => ({
-            //     ...s,
-            //     currentIndex: stepIndex,
-            //     stepProgress,
-            //   }))
-            // }
+            onChange={({ stepIndex, stepProgress }) =>
+              setState((s) => ({
+                ...s,
+                currentIndex: stepIndex,
+                stepProgress,
+              }))
+            }
           />
         </div>
         <div
@@ -67,49 +75,80 @@ function Player({ videoId, onChange, style, steps }) {
           }}
         ></div>
       </div>
+      <div
+        style={{
+          position: "absolute",
+          bottom: 0,
+          width: "100%",
+          // background: "salmon",
+          // height: 20,
+        }}
+      >
+        <div style={{ paddingLeft: 22 }}>
+          <Button
+            onClick={() => dispatch({ type: "prev" })}
+            aria-label="Previous Step"
+          >
+            <LeftIcon style={{ display: "block" }} />
+          </Button>
+          <Button
+            style={{ padding: "0 12px" }}
+            onClick={() => {
+              playerRef.current.pause();
+              setState((s) => ({ ...s, isPlaying: !s.isPlaying }));
+            }}
+          >
+            {state.isPlaying ? (
+              <PauseIcon style={{ display: "block" }} aria-label="Pause" />
+            ) : (
+              <PlayIcon style={{ display: "block" }} aria-label="Play" />
+            )}
+          </Button>
+          <Button
+            onClick={() => dispatch({ type: "next" })}
+            aria-label="Next Step"
+          >
+            <RightIcon style={{ display: "block" }} />
+          </Button>
+        </div>
+        <Slider
+          inputSteps={steps}
+          currentIndex={state.currentIndex}
+          stepProgress={state.stepProgress}
+          isPlaying={state.isPlaying}
+          onChange={({ stepIndex, stepProgress }) =>
+            playerRef.current.seek(stepIndex, stepProgress, false)
+          }
+          play={() => {
+            playerRef.current.play();
+            setState((s) => ({ ...s, isPlaying: true }));
+          }}
+          pause={() => {
+            playerRef.current.pause();
+            setState((s) => ({ ...s, isPlaying: false }));
+          }}
+          style={{ padding: "15px 30px 15px" }}
+        />
+      </div>
     </div>
   );
 }
 
-// <div style={{ margin: 10 }}>
-// <div
-//   style={{
-//     overflow: "hidden",
-//     position: "absolute",
-//     width: "100%",
-//     height: "100%",
-//   }}
-// >
-//   <VideoPlayer
-//     // ref={playerRef}
-//     steps={steps}
-//     videoId={videoId}
-//     style={{
-//       transform: "translate(-67px, -286px)",
-//       overflow: "hidden",
-//     }}
-//     // onChange={({ stepIndex, stepProgress }) =>
-//     //   setState((s) => ({
-//     //     ...s,
-//     //     currentIndex: stepIndex,
-//     //     stepProgress,
-//     //   }))
-//     // }
-//   />
-// </div>
-// </div>
-<div
-  style={{
-    position: "absolute",
-    top: -100,
-    left: -100,
-    bottom: -10,
-    right: -10,
-    background: "white",
-    //         backgroundImage: `radial-gradient(
-    //   transparent 30%,
-    //   rgb(30, 30, 30) 50%,
-    //   rgb(30, 30, 30)
-    // )`,
-  }}
-></div>;
+function Button(props) {
+  return (
+    <button
+      {...props}
+      style={{
+        font: "inherit",
+        background: "transparent",
+        cursor: "pointer",
+        userSelect: "none",
+        padding: "1px 0",
+        border: "none",
+        color: "#7387c4",
+        // height: "30px",
+        ...props.style,
+      }}
+    />
+  );
+}
