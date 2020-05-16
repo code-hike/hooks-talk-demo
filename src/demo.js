@@ -1,6 +1,6 @@
 import React from "react";
-import { Slider } from "./slider";
-import { VideoPlayer } from "./video-player";
+import { Slider } from "../player/slider";
+import { VideoPlayer } from "../player/video-player";
 import { MiniBrowser } from "./mini-browser/index.tsx";
 import Demo0 from "../guide/0.0.class";
 import Demo1 from "../guide/0.1.class";
@@ -10,6 +10,7 @@ import { MiniEditor } from "./mini-editor/mini-editor";
 import code0 from "!!raw-loader!../guide/0.0.class.js";
 import code1 from "!!raw-loader!../guide/0.1.class.js";
 import code2 from "!!raw-loader!../guide/0.2.class.js";
+import { Player } from "../player/player";
 
 export function Demo() {
   const [state, setState] = React.useState({
@@ -56,13 +57,15 @@ export function Demo() {
               </SmoothView>
             </div>
           </MiniBrowser>
-          <div
+          <div style={{ height: "15px" }} />
+          <Player videoId="dpw9EHDh2bM" style={{ height: 185 }} steps={steps} />
+          {/* <div
             style={{
               position: "relative",
-              borderRadius: "50%",
+              borderRadius: "8px",
               overflow: "hidden",
               height: 185,
-              width: 185,
+              width: 285,
               margin: "15px auto",
             }}
           >
@@ -82,9 +85,9 @@ export function Demo() {
                 }))
               }
             />
-          </div>
+          </div> */}
         </div>
-        <Slider
+        {/* <Slider
           inputSteps={steps}
           currentIndex={state.currentIndex}
           stepProgress={state.stepProgress}
@@ -100,7 +103,7 @@ export function Demo() {
             playerRef.current.pause();
             setState((s) => ({ ...s, isPlaying: false }));
           }}
-        />
+        /> */}
       </div>
     </div>
   );

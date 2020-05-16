@@ -38,7 +38,7 @@ const VideoPlayer = React.forwardRef(
         player.seekTo(newTime, true);
       }
 
-      onChange(state.get());
+      onChange && onChange(state.get());
     }, 100);
 
     React.useImperativeHandle(parentRef, () => ({
