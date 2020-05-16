@@ -61,6 +61,12 @@ const VideoPlayer = React.forwardRef(
           onReady={({ target }) => {
             playerRef.current.player = target;
           }}
+          onStateChange={() => {
+            console.log("change");
+            const { state, player } = playerRef.current;
+            state.playingChange(player.getPlayerState());
+            onChange(state.get());
+          }}
         />
       </div>
     );
@@ -71,12 +77,14 @@ function initState(steps) {
   const state = {
     currentIndex: 0,
     stepProgress: 0,
+    isPlaying: true,
   };
 
   return {
     get: () => ({
       stepIndex: state.currentIndex,
       stepProgress: state.stepProgress,
+      isPlaying: state.isPlaying,
     }),
     getTime: () => {
       return steps[state.currentIndex].start + state.stepProgress;
@@ -85,9 +93,14 @@ function initState(steps) {
       state.currentIndex = stepIndex;
       state.stepProgress = stepProgress;
     },
+    playingChange: (playerState) => {
+      // https://developers.google.com/youtube/iframe_api_reference#Playback_status
+      state.isPlaying = playerState === 1;
+    },
     tick: (time) => {
       const currentStep = steps[state.currentIndex];
       const stepChanged = time >= currentStep.end;
+
       if (!stepChanged) {
         state.stepProgress = time - currentStep.start;
         return {};

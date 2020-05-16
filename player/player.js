@@ -21,9 +21,11 @@ function Player({ videoId, onChange, style, steps }) {
         overflow: "hidden",
         background: "rgb(30, 30, 30)",
         position: "relative",
+        color: "#fafafa",
         ...style,
       }}
     >
+      <div style={{ position: "absolute" }}>State in class components</div>
       <div
         style={{
           position: "absolute",
@@ -53,9 +55,10 @@ function Player({ videoId, onChange, style, steps }) {
             style={{
               transform: "translate(-74px, -278px)",
             }}
-            onChange={({ stepIndex, stepProgress }) =>
+            onChange={({ stepIndex, stepProgress, isPlaying }) =>
               setState((s) => ({
                 ...s,
+                isPlaying: isPlaying,
                 currentIndex: stepIndex,
                 stepProgress,
               }))
@@ -94,8 +97,9 @@ function Player({ videoId, onChange, style, steps }) {
           <Button
             style={{ padding: "0 12px" }}
             onClick={() => {
-              playerRef.current.pause();
-              setState((s) => ({ ...s, isPlaying: !s.isPlaying }));
+              state.isPlaying
+                ? playerRef.current.pause()
+                : playerRef.current.play();
             }}
           >
             {state.isPlaying ? (
