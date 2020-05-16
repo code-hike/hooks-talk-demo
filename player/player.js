@@ -21,11 +21,21 @@ function Player({ videoId, onChange, style, steps }) {
         overflow: "hidden",
         background: "rgb(30, 30, 30)",
         position: "relative",
-        color: "#fafafa",
+        color: "#ddd",
         ...style,
       }}
     >
-      <div style={{ position: "absolute" }}>State in class components</div>
+      <div
+        style={{
+          position: "absolute",
+          fontSize: "1.5em",
+          padding: "18px 30px",
+          width: 245,
+          boxSizing: "border-box",
+        }}
+      >
+        1/5 State in class components
+      </div>
       <div
         style={{
           position: "absolute",
