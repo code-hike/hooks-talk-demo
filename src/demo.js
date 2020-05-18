@@ -5,10 +5,8 @@ import Demo1 from "../guide/0.1.class";
 import Demo2 from "../guide/0.2.class";
 import { SmoothView } from "./smooth-view";
 import { MiniEditor } from "./mini-editor/mini-editor";
-import code0 from "!!raw-loader!../guide/0.0.class.js";
-import code1 from "!!raw-loader!../guide/0.1.class.js";
-import code2 from "!!raw-loader!../guide/0.2.class.js";
 import { Player } from "../player/player";
+import { useSpring } from "use-spring";
 
 export function Demo() {
   const [state, setState] = React.useState({
@@ -16,6 +14,17 @@ export function Demo() {
     stepProgress: 0,
     isPlaying: true,
   });
+
+  const stepNormalProgress =
+    state.stepProgress / steps[state.currentIndex].duration;
+
+  const [progress] = useSpring(state.currentIndex);
+
+  console.log(
+    { progress, stepNormalProgress },
+    state.stepProgress,
+    steps[state.currentIndex].duration
+  );
   return (
     <div
       style={{
@@ -33,25 +42,15 @@ export function Demo() {
         }}
       >
         <MiniEditor
-          files={["index.js"]}
-          active="index.js"
           style={{ width: 500 }}
-        >
-          <SmoothView stepIndex={state.currentIndex}>
-            <pre>{code0}</pre>
-            <pre>{code1}</pre>
-            <pre>{code2}</pre>
-          </SmoothView>
-        </MiniEditor>
+          progress={progress}
+          steps={steps.map((s) => s.editor)}
+        />
         <div style={{ width: 30 }} />
         <div style={{}}>
           <MiniBrowser url="http://localhost:3000/" height={385}>
             <div className="demo-container">
-              <SmoothView stepIndex={state.currentIndex}>
-                <Demo0 name={`Marty`} />
-                <Demo1 />
-                <Demo2 />
-              </SmoothView>
+              {steps[state.currentIndex].demo}
             </div>
           </MiniBrowser>
           <div style={{ height: 30 }} />
@@ -77,12 +76,64 @@ export function Demo() {
 }
 
 const steps = [
-  { ...t("18:03-18:26") },
-  { ...t("18:26-19:16") },
-  { ...t("17:50-18:03") },
-  { ...t("19:20-20:03") },
-  { ...t("20:20-22:03") },
+  {
+    ...t("18:03-18:26"),
+    demo: <Demo0 name={`Marty`} />,
+    editor: {
+      code: require("!!raw-loader!../guide/0.0.class.js").default,
+      lang: "jsx",
+      file: "ClassExample.js",
+      focus: undefined,
+      tabs: ["ClassExample.js"],
+    },
+  },
+  {
+    ...t("18:26-19:16"),
+    demo: <Demo1 />,
+    editor: {
+      code: require("!!raw-loader!../guide/0.1.class.js").default,
+      lang: "jsx",
+      file: "ClassExample.js",
+      focus: undefined,
+      tabs: ["ClassExample.js"],
+    },
+  },
+  {
+    ...t("17:50-18:03"),
+    demo: <Demo2 />,
+    editor: {
+      code: require("!!raw-loader!../guide/0.2.class.js").default,
+      lang: "jsx",
+      file: "ClassExample.js",
+      focus: undefined,
+      tabs: ["ClassExample.js"],
+    },
+  },
+  {
+    ...t("19:20-20:03"),
+    demo: <Demo1 />,
+    editor: {
+      code: require("!!raw-loader!../guide/0.1.class.js").default,
+      lang: "jsx",
+      file: "ClassExample.js",
+      focus: undefined,
+      tabs: ["ClassExample.js"],
+    },
+  },
+  {
+    ...t("20:20-22:03"),
+    demo: <Demo0 name={`Harry`} />,
+    editor: {
+      code: require("!!raw-loader!../guide/0.0.class.js").default,
+      lang: "jsx",
+      file: "ClassExample.js",
+      focus: undefined,
+      tabs: ["ClassExample.js"],
+    },
+  },
 ];
+
+console.log({ steps });
 
 function t(ts) {
   const [startString, endString] = ts.split("-");

@@ -1,11 +1,17 @@
 {
   "dependencies": {
+    "@code-surfer/standalone": "^3.1.1",
+    "@emotion/core": "10.0.7",
+    "@mdx-js/mdx": "^1.2.2",
+    "@mdx-js/react": "^1.0.6",
     "next": "^9.4.0",
     "raw-loader": "^4.0.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-range": "^1.6.1",
-    "react-youtube": "^7.11.2"
+    "react-youtube": "^7.11.2",
+    "theme-ui": "0.2.31",
+    "use-spring": "^0.2.3"
   },
   "scripts": {
     "dev": "next"

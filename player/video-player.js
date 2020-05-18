@@ -24,7 +24,8 @@ const VideoPlayer = React.forwardRef(
 
     useInterval(() => {
       const { player, state } = playerRef.current;
-      if (!player) return;
+      // TODO fix initial buffering (time is 0, maybe use that as condition)
+      if (!player || player.getPlayerState() === 3) return;
 
       const time = player.getCurrentTime();
       const { pause, seek } = state.tick(time);
@@ -38,6 +39,7 @@ const VideoPlayer = React.forwardRef(
         player.seekTo(newTime, true);
       }
 
+      console.log("tick change", state.get(), time, player.getPlayerState());
       onChange && onChange(state.get());
     }, 100);
 
@@ -47,6 +49,7 @@ const VideoPlayer = React.forwardRef(
         state.seek(stepIndex, stepProgress);
         const newTime = state.getTime();
         player.seekTo(newTime, true);
+        console.log("imp change", state.get());
         onChange(state.get());
       },
       play: () => playerRef.current.player.playVideo(),
@@ -62,9 +65,9 @@ const VideoPlayer = React.forwardRef(
             playerRef.current.player = target;
           }}
           onStateChange={() => {
-            console.log("change");
             const { state, player } = playerRef.current;
             state.playingChange(player.getPlayerState());
+            console.log("stat change", state.get());
             onChange(state.get());
           }}
         />
