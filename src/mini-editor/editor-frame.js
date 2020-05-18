@@ -115,7 +115,7 @@ const editorStyle = {
   backgroundColor: "rgb(30, 30, 30)",
   height: "calc(100% - 28px)",
   color: "#cccccc",
-  fontSize: "13px",
+  fontSize: "15px",
   padding: "5px 10px",
   lineHeight: "1.1rem",
 };
