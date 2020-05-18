@@ -42,7 +42,7 @@ export function Demo() {
         }}
       >
         <MiniEditor
-          style={{ width: 500 }}
+          style={{ width: 600 }}
           progress={progress}
           steps={steps.map((s) => s.editor)}
         />

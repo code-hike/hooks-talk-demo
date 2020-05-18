@@ -5,7 +5,7 @@ import { vsDark } from "@code-surfer/themes";
 
 export { MiniEditor };
 
-function MiniEditor({ progress, steps, height, backwards }) {
+function MiniEditor({ progress, steps, height, backwards, style }) {
   const files = [...new Set(steps.map((s) => s.file).filter((f) => f != null))];
 
   const activeStepIndex = backwards
@@ -36,6 +36,7 @@ function MiniEditor({ progress, steps, height, backwards }) {
       active={activeFile}
       height={height}
       link={activeStep.link}
+      style={style}
     >
       {activeSteps.length > 0 && (
         <CodeSurfer

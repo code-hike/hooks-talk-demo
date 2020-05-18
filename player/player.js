@@ -95,7 +95,9 @@ function Player({
       >
         <div style={{ paddingLeft: 22 }}>
           <Button
-            onClick={() => dispatch({ type: "prev" })}
+            onClick={() =>
+              playerRef.current.seek(Math.max(stepIndex - 1, 0), 0)
+            }
             aria-label="Previous Step"
           >
             <LeftIcon style={{ display: "block" }} />
@@ -113,7 +115,12 @@ function Player({
             )}
           </Button>
           <Button
-            onClick={() => dispatch({ type: "next" })}
+            onClick={() =>
+              playerRef.current.seek(
+                Math.min(stepIndex + 1, steps.length - 1),
+                0
+              )
+            }
             aria-label="Next Step"
           >
             <RightIcon style={{ display: "block" }} />
