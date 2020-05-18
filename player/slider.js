@@ -82,7 +82,7 @@ function RangeBar({ max, value, onChange, ticks, style }) {
             flex: 1,
           }}
         >
-          <div style={{ position: "absolute", width: "100%" }}>
+          {/* <div style={{ position: "absolute", width: "100%" }}>
             {ticks.map((x) => (
               <div
                 key={x}
@@ -97,7 +97,7 @@ function RangeBar({ max, value, onChange, ticks, style }) {
                 }}
               />
             ))}
-          </div>
+          </div> */}
           <div
             ref={props.ref}
             style={{
