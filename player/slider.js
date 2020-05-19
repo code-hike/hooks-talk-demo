@@ -3,16 +3,7 @@ import { Range, Direction, getTrackBackground } from "react-range";
 
 export { Slider };
 
-function Slider({
-  inputSteps,
-  currentIndex,
-  stepProgress,
-  onChange,
-  isPlaying,
-  play,
-  pause,
-  style,
-}) {
+function Slider({ inputSteps, currentIndex, stepProgress, onChange, style }) {
   const { steps, totalDuration } = React.useMemo(() => {
     let totalDuration = 0;
     let steps = [];

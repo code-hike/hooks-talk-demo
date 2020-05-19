@@ -20,49 +20,71 @@ export function Demo() {
   });
 
   return (
-    <div
-      style={{
-        display: "flex",
-        alignItems: "center",
-        height: "calc(100vh - 16px)",
-      }}
-    >
+    <>
       <div
         style={{
           display: "flex",
-          justifyContent: "center",
-          height: 600,
-          width: "100%",
+          alignItems: "center",
+          height: "calc(100vh - 16px)",
         }}
       >
-        <MiniEditor
-          style={{ width: 600 }}
-          progress={progress}
-          steps={editorSteps}
-        />
-        <div style={{ width: 30 }} />
-        <div style={{}}>
-          <MiniBrowser url="http://localhost:3000/" height={385}>
-            {browserSteps[state.currentIndex]}
-          </MiniBrowser>
-          <div style={{ height: 30 }} />
-          <Player
-            videoId="dpw9EHDh2bM"
-            style={{ height: 185 }}
-            steps={playerSteps}
-            stepIndex={state.currentIndex}
-            stepProgress={state.stepProgress}
-            isPlaying={state.isPlaying}
-            onChange={({ stepIndex, stepProgress, isPlaying }) =>
-              setState(() => ({
-                isPlaying,
-                currentIndex: stepIndex,
-                stepProgress,
-              }))
-            }
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            height: 600,
+            width: "100%",
+          }}
+        >
+          <MiniEditor
+            style={{ width: 600 }}
+            progress={progress}
+            steps={editorSteps}
           />
+          <div style={{ width: 30 }} />
+          <div style={{}}>
+            <MiniBrowser url="http://localhost:3000/" height={385}>
+              {browserSteps[state.currentIndex]}
+            </MiniBrowser>
+            <div style={{ height: 30 }} />
+            <Player
+              videoId="dpw9EHDh2bM"
+              style={{ height: 185 }}
+              steps={playerSteps}
+              stepIndex={state.currentIndex}
+              stepProgress={state.stepProgress}
+              isPlaying={state.isPlaying}
+              onChange={({ stepIndex, stepProgress, isPlaying }) =>
+                setState(() => ({
+                  isPlaying,
+                  currentIndex: stepIndex,
+                  stepProgress,
+                }))
+              }
+            />
+          </div>
         </div>
       </div>
-    </div>
+      <footer
+        style={{
+          position: "fixed",
+          bottom: 30,
+          right: 30,
+          fontFamily:
+            "Ubuntu,Droid Sans,-apple-system,BlinkMacSystemFont,Segoe WPC,Segoe UI,sans-serif",
+        }}
+      >
+        <div>
+          Built with <a href="https://codehike.org">Code Hike</a> by{" "}
+          <a href="https://twitter.com/pomber">@pomber</a>
+        </div>
+        <div>
+          Content from{" "}
+          <a href="https://www.youtube.com/watch?v=dpw9EHDh2bM">
+            Dan Abramov's talk
+          </a>
+        </div>
+      </footer>
+    </>
   );
 }

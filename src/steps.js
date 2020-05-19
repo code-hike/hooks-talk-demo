@@ -1,6 +1,12 @@
 import Demo0 from "../guide/0.0";
-import Demo1 from "../guide/0.12.class";
+import Demo1 from "../guide/0.11.demo";
 import Demo2 from "../guide/0.2.class";
+
+async function changeText(element) {
+  await mouseAppearAt(x);
+  await mouseMoveTo(element.position);
+  await clickOn(element);
+}
 
 const steps = [
   {
@@ -158,8 +164,8 @@ const steps = [
     },
   },
   {
-    player: { ...t("20:03-20:10") },
-    demo: <Demo0 name={`Mary`} />,
+    player: { ...t("19:59-20:20") },
+    demo: <Demo1 />,
     editor: {
       code: require("!!raw-loader!../guide/0.11.js").default,
       lang: "jsx",

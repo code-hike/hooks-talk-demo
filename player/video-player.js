@@ -39,7 +39,7 @@ const VideoPlayer = React.forwardRef(
         player.seekTo(newTime, true);
       }
 
-      console.log("tick change", state.get(), time, player.getPlayerState());
+      // console.log("tick change", state.get(), time, player.getPlayerState());
       onChange && onChange(state.get());
     }, 100);
 
@@ -49,7 +49,7 @@ const VideoPlayer = React.forwardRef(
         state.seek(stepIndex, stepProgress);
         const newTime = state.getTime();
         player.seekTo(newTime, true);
-        console.log("imp change", state.get());
+        // console.log("imp change", state.get());
         onChange(state.get());
       },
       play: () => playerRef.current.player.playVideo(),
@@ -67,7 +67,7 @@ const VideoPlayer = React.forwardRef(
           onStateChange={() => {
             const { state, player } = playerRef.current;
             state.playingChange(player.getPlayerState());
-            console.log("stat change", state.get());
+            // console.log("stat change", state.get());
             onChange(state.get());
           }}
         />
