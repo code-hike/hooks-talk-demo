@@ -1,4 +1,5 @@
 import Demo0 from "../guide/0.0";
+import Demo010 from "../guide/0.10.demo";
 import Demo1 from "../guide/0.11.demo";
 import Demo2 from "../guide/0.2.class";
 
@@ -143,7 +144,7 @@ const steps = [
   },
   {
     player: { ...t("19:44-19:54") },
-    demo: <Demo0 name={`Mary`} />,
+    demo: <Demo010 />,
     editor: {
       code: require("!!raw-loader!../guide/0.10.js").default,
       lang: "jsx",
@@ -154,7 +155,7 @@ const steps = [
   },
   {
     player: { ...t("19:54-19:59") },
-    demo: <Demo0 name={`Mary`} />,
+    demo: <Demo010 />,
     editor: {
       code: require("!!raw-loader!../guide/0.11.js").default,
       lang: "jsx",

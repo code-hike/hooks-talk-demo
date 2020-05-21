@@ -4,14 +4,16 @@ import { WindowButtons, Back, Forward, Refresh, Open } from "./buttons.tsx";
 function MiniBrowser({
   height = 100,
   url,
+  style,
   children,
 }: {
   height?: number;
+  style?: React.CSSProperties;
   url: string;
   children: React.ReactNode;
 }) {
   return (
-    <div>
+    <div style={style}>
       <div
         className="shadow"
         style={{

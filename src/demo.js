@@ -43,7 +43,11 @@ export function Demo() {
           />
           <div style={{ width: 30 }} />
           <div style={{}}>
-            <MiniBrowser url="http://localhost:3000/" height={385}>
+            <MiniBrowser
+              url="http://localhost:3000/"
+              height={385}
+              style={{ width: 440 }}
+            >
               {browserSteps[state.currentIndex]}
             </MiniBrowser>
             <div style={{ height: 30 }} />
