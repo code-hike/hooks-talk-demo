@@ -1,4 +1,5 @@
 html { 
+  height: 100%;
   background: #ECE9E6;  /* fallback for old browsers */
   background: -webkit-linear-gradient(-16deg, #FFFFFF, #d8d8d8, #FFFFFF);  /* Chrome 10-25, Safari 5.1-6 */
   background: linear-gradient(-16deg, #FFFFFF, #d8d8d8, #FFFFFF); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */

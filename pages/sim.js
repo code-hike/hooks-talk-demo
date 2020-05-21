@@ -1,41 +1,44 @@
-import React from "react"
-import Row from "./row"
+import React from "react";
 import userEvent from "@testing-library/user-event";
 
-export default class Greeting extends React.Component {
-  constructor(props) {
-    super(props)
-    this.myRef = React.createRef();
-    this.state = {
-      name: "Mary",
-    }
-    this.handleNameChange = this.handleNameChange.bind(this)
-  }
-
-  handleNameChange(e) {
-    this.setState({ 
-      name: e.target.value
-    })
-  }
-
-  componentDidMount() {
-    const node = this.myRef.current;
-    const input = node.querySelector("input")
-    appear(input, "Harry")
-  }
-
-  render() {
-    return (
-      <section ref={this.myRef}>
-        <Row label="Name">
-          <input value={this.state.name} onChange={this.handleNameChange}/>
-        </Row>
-      </section>
-    )
-  }
+export default function Page() {
+  const ref1 = React.useRef();
+  const ref2 = React.useRef();
+  const [value1, setValue1] = React.useState("Foo");
+  const [value2, setValue2] = React.useState("Bar");
+  return (
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        height: "120vh",
+      }}
+    >
+      <h1>
+        Hey {value1} {value2}
+      </h1>
+      <div>
+        <input
+          ref={ref1}
+          value={value1}
+          onChange={(e) => setValue1(e.target.value)}
+        ></input>
+        <button onClick={() => appear(ref1.current, "Harry")}>Click Me</button>
+      </div>
+      <br />
+      <div>
+        <input
+          ref={ref2}
+          value={value2}
+          onChange={(e) => setValue2(e.target.value)}
+        ></input>
+        <button onClick={() => appear(ref2.current, "Potter")}>Click Me</button>
+      </div>
+    </div>
+  );
 }
-
-
 
 function appear(element, text) {
   const elemRect = element.getBoundingClientRect();
@@ -69,8 +72,9 @@ function appear(element, text) {
       element.select();
       await userEvent.clear(element);
       await userEvent.type(element, text, { delay: 100 });
-      element.blur()
+      element.blur();
       cursor.style.opacity = 0;
+
       cursor.addEventListener("transitionend", () =>
         cursor.parentElement.removeChild(cursor)
       );
