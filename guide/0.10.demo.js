@@ -1,9 +1,11 @@
 import React from "react"
 import Row from "./row"
+import { appear } from "../src/sim-user/sim-user";
 
 export default class Greeting extends React.Component {
   constructor(props) {
     super(props)
+    this.myRef = React.createRef();
     this.state = {
       name: "Mary",
       error: false,
@@ -17,11 +19,19 @@ export default class Greeting extends React.Component {
     })
   }
 
+  componentDidMount() {
+    if (!this.props.sim) { return }
+    const node = this.myRef.current;
+    const input = node.querySelector("input")
+    appear(input, "H")
+  }
+
+
   render() {
     return this.state.error ? (
       <ErrorOverlay />
     ) : (
-      <section>
+      <section ref={this.myRef}>
         <Row label="Name">
           <input
             value={this.state.name}

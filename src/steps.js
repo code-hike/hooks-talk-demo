@@ -143,8 +143,8 @@ const steps = [
     },
   },
   {
-    player: { ...t("19:44-19:54") },
-    demo: <Demo010 />,
+    player: { ...t("19:44-19:48") },
+    demo: <Demo0 name={`Mary`} />,
     editor: {
       code: require("!!raw-loader!../guide/0.10.js").default,
       lang: "jsx",
@@ -154,8 +154,30 @@ const steps = [
     },
   },
   {
-    player: { ...t("19:54-19:59") },
-    demo: <Demo010 />,
+    player: { ...t("19:48-19:52") },
+    demo: <Demo010 key="1" sim />,
+    editor: {
+      code: require("!!raw-loader!../guide/0.10.js").default,
+      lang: "jsx",
+      file: "ClassExample.js",
+      focus: undefined,
+      tabs: ["ClassExample.js"],
+    },
+  },
+  {
+    player: { ...t("19:52-19:56") },
+    demo: <Demo010 key="1" sim />,
+    editor: {
+      code: require("!!raw-loader!../guide/0.11.js").default,
+      lang: "jsx",
+      file: "ClassExample.js",
+      focus: undefined,
+      tabs: ["ClassExample.js"],
+    },
+  },
+  {
+    player: { ...t("19:56-19:59") },
+    demo: <Demo010 key="2" />,
     editor: {
       code: require("!!raw-loader!../guide/0.11.js").default,
       lang: "jsx",
