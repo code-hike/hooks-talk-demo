@@ -1,0 +1,26 @@
+{
+  "name": "hooks-talk-demo",
+  "version": "0.2.1",
+  "dependencies": {
+    "@code-hike/mini-browser": "0.2.1",
+    "@code-hike/mini-editor": "0.2.1",
+    "@emotion/core": "10.0.7",
+    "@mdx-js/react": "^1.0.6",
+    "@testing-library/dom": "^7.5.7",
+    "@testing-library/user-event": "^10.3.1",
+    "next": "^9.5.3",
+    "raw-loader": "^4.0.1",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-range": "^1.6.1",
+    "react-youtube": "^7.11.2",
+    "theme-ui": "0.2.31",
+    "use-spring": "^0.2.3"
+  },
+  "scripts": {
+    "dev": "next",
+    "build": "next build",
+    "start": "next start",
+    "export": "next build && next export"
+  }
+}
